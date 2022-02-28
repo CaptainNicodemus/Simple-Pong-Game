@@ -1,44 +1,54 @@
+#Project: A Simple Pong Game
+#Date: Feb 14th, 2022
+#Author: Nicodemus Robles 
+#Purpose: Following a turtoral, I made a simple pong game using pygame
+#Input: Up and down arrow keys
+
 import pygame, sys, random
 
-#gen stepup
+#gen step up
 pygame.init()
 clock = pygame.time.Clock()
 
 #setting up main window
 screen_width = 1200
 screen_height = 800
-
 screen = pygame.display.set_mode((screen_width,screen_height))
 pygame.display.set_caption("Simple Pong by Nicodemus Robles")
 
+
+#Setting size for objects 
 ball = pygame.Rect(screen_width/2 - 15, screen_height/2 - 15, 30, 30)
 player = pygame.Rect(screen_width - 20, screen_height/2 - 70, 10, 140)
 opponent = pygame.Rect(10, screen_height/2 - 70, 10, 140)
 
-
+#Setting color scheme and font for the game
 bg_color = pygame.Color('grey12')
 light_grey = (200, 200, 200)
 game_font = pygame.font.Font("freesansbold.ttf", 24)
 
-#game vars
+#Ball mov speed
 ball_speed_x = 7
 ball_speed_y = 7
 
+#Player and Opponent inital speeds
 player_speed = 0
 opponent_speed = 7
 
 player_score = 0
 opponet_score = 0
 
-
+#Game Loop
 while True:
     for event in pygame.event.get():
+
+        #Lets us quit
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
 
 
-        #player keys
+        #player movemnt keys
         if event.type == pygame.KEYDOWN:
             if event.key ==  pygame. K_DOWN:
                 player_speed += 7
@@ -54,6 +64,7 @@ while True:
     #player Animation
     player.y += player_speed
     
+    #Stops player from moving out of bounds
     if player.top <= 0:
         player.top = 0
     if player.bottom >= screen_height:
@@ -74,12 +85,15 @@ while True:
     ball.x += ball_speed_x
     ball.y += ball_speed_y
 
+    #Keeps ball in window
     if ball.top < 0 or ball.bottom > screen_height:
         ball_speed_y *= -1
         
-    #game over
+    #Player won
     if ball.left < 0:
+        #Recenters ball
         ball.center = (screen_width/2,screen_height/2)
+        #Gives ball "Random" new trajectory 
         ball_speed_x = 7 * random.choice((1,-1))
         ball_speed_y = 7 * random.choice((1,-1))
         player_score += 1
