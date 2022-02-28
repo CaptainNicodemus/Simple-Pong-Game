@@ -98,6 +98,7 @@ while True:
         ball_speed_y = 7 * random.choice((1,-1))
         player_score += 1
 
+    #Comp won...''
     if ball.right > screen_width:
         ball.center = (screen_width/2,screen_height/2)
         ball_speed_x = 7 * random.choice((1,-1))
@@ -105,7 +106,7 @@ while True:
         opponet_score += 1
 
 
-    #Ball Collision
+    #Ball Collision on players
     if ball.colliderect(player) and ball_speed_x > 0:
         ball_speed_x *= -1
     if ball.colliderect(opponent) and ball_speed_x < 0:
